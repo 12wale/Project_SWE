@@ -1,1 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
 @import "tailwindcss";
+.cinzel-decorative {
+  font-family: 'Cinzel Decorative', cursive;
+  font-weight: bold;
+}
+@keyframes bgGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.auth-input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,215,0,0.4);
+  padding: 12px 14px;
+  border-radius: 12px;
+  width: 100%;
+  color: #facc15;
+  outline: none;
+  transition: .25s;
+}
+.auth-input:focus {
+  border-color: gold;
+  box-shadow: 0 0 12px rgba(255,215,0,0.5);
+}
+
+.auth-btn {
+  background: linear-gradient(90deg, #facc15, #fbbf24);
+  color: #1e1e1e;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  width: 100%;
+}
+.auth-error {
+  color: #f87171;
+  margin-top: 3px;
+  font-size: 0.85rem;
+}
+.auth-switch {
+  color: gold;
+  cursor: pointer;
+}
+.auth-switch-text {
+  text-align: center;
+  color: #ddd;
+  margin-top: 5px;
+}

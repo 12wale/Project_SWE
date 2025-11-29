@@ -1,9 +1,13 @@
-import React from 'react'
 
-const HeroSection = () => {
+import Slider from './Slider/Slider'
+
+const Home = () => {
   return (
-    <div>HeroSection</div>
+    <div className="flex flex-col  "> 
+      <Slider/>
+     
+    </div>
   )
 }
 
-export default HeroSection
+export default Home
