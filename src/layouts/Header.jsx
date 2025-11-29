@@ -49,7 +49,14 @@ const Header = () => {
           </svg>
         </button>
       </div>
-
+<Link
+              to="/auth"
+              className="bg-yellow-600 hover:bg-yellow-500 text-black font-semibold 
+                       px-3 py-2 rounded-md text-center transition-all duration-300"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Login / Sign Up
+            </Link>
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden bg-gray-800 border-t border-yellow-600/30">
