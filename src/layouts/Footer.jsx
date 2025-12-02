@@ -51,18 +51,18 @@ const Footer = () => {
             <h3 className="text-lg font-bold text-yellow-500 mb-6 cinzel-decorative">Visit Us</h3>
             <ul className="space-y-4">
               <li className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
+                <MapPin className="w-5 h-5 text-yellow-500 mt-1 shrink-0" />
                 <span className="text-sm text-gray-400">
                   Alexandria Desert Road,<br />
                   Giza, Egypt
                 </span>
               </li>
               <li className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-yellow-500 flex-shrink-0" />
+                <Phone className="w-5 h-5 text-yellow-500 shrink-0" />
                 <span className="text-sm text-gray-400">+20 2 3531 7344</span>
               </li>
               <li className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-yellow-500 flex-shrink-0" />
+                <Mail className="w-5 h-5 text-yellow-500 shrink-0" />
                 <span className="text-sm text-gray-400"> tourism_info@efinance.com.eg</span>
               </li>
             </ul>

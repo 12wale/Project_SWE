@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ShoppingBag } from 'lucide-react';
 import logo from '../assets/logo.png';
+import { useCart } from '../context/CartContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { getCartCount } = useCart();
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -26,7 +29,7 @@ const Header = () => {
         
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-8 items-center">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -37,6 +40,19 @@ const Header = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
+          
+          {/* Cart Icon */}
+          <Link 
+            to="/cart" 
+            className="relative text-gray-300 hover:text-yellow-500 transition-colors duration-300"
+          >
+            <ShoppingBag className="w-6 h-6" />
+            {getCartCount() > 0 && (
+              <span className="absolute -top-2 -right-2 bg-yellow-500 text-gray-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {getCartCount()}
+              </span>
+            )}
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -49,7 +65,7 @@ const Header = () => {
           </svg>
         </button>
       </div>
-<Link
+            <Link
               to="/auth"
               className="bg-yellow-600 hover:bg-yellow-500 text-black font-semibold 
                        px-3 py-2 rounded-md text-center transition-all duration-300"
