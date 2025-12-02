@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -7,17 +7,18 @@ export default function AuthPage() {
   const [mode, setMode] = useState("login");
   const containerRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Mouse + Touch Support
+  // Tilt effect
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    const handleMove = (event) => {
-      const e = event.touches ? event.touches[0] : event;
+    const handleMove = (e) => {
+      const evt = e.touches ? e.touches[0] : e;
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+      const x = evt.clientX - rect.left - rect.width / 2;
+      const y = evt.clientY - rect.top - rect.height / 2;
       setTilt({ x, y });
     };
 
@@ -34,11 +35,42 @@ export default function AuthPage() {
     transform: `rotateY(${tilt.x / 45}deg) rotateX(${-tilt.y / 45}deg)`,
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-black to-slate-900 relative overflow-hidden">
+  // Parallax background motion
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-      {/* golden noise texture */}
-      <div className="absolute inset-0 bg-[url('https://i.imgur.com/YsJj3iH.png')] opacity-20 pointer-events-none"></div>
+  const parallaxStyle = {
+    transform: `translate3d(${mousePos.x / 50}px, ${mousePos.y / 50}px, 0)`
+  };
+
+  const handleSuccess = () => {
+    window.location.reload();
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gray-700">
+
+      {/* Night Egyptian Museum Background with Motion Parallax */}
+      <motion.div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            "url('https://upload.wikimedia.org/wikipedia/commons/6/65/Egyptian_Museum%2C_Cairo_by_Night.jpg')",
+        }}
+        animate={parallaxStyle}
+        transition={{ type: "spring", stiffness: 30, damping: 20 }}
+      />
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px]"></div>
+
+      {/* Gold particles */}
+      <div className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"></div>
 
       <motion.div
         ref={containerRef}
@@ -53,12 +85,11 @@ export default function AuthPage() {
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-3xl font-extrabold cinzel-decorative mb-6 text-yellow-400 text-center drop-shadow-[0_0_10px_rgba(255,215,0,0.6)]"
+          className="text-3xl font-extrabold cinzel-decorative mb-6 text-yellow-400 text-center drop-shadow-[0_0_12px_rgba(255,215,0,0.7)]"
         >
           {mode === "login" ? "Welcome Back" : "Create Your Account"}
         </motion.h1>
 
-        {/* Smooth transition fix */}
         <AnimatePresence mode="wait">
           <motion.div
             key={mode}
@@ -68,9 +99,9 @@ export default function AuthPage() {
             transition={{ duration: 0.35 }}
           >
             {mode === "login" ? (
-              <Login switchMode={() => setMode("signup")} />
+              <Login switchMode={() => setMode("signup")} onSuccess={handleSuccess} />
             ) : (
-              <Signup switchMode={() => setMode("login")} />
+              <Signup switchMode={() => setMode("login")} onSuccess={handleSuccess} />
             )}
           </motion.div>
         </AnimatePresence>

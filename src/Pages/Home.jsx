@@ -1,9 +1,11 @@
 import Banner from "../components/Home/Banner"
 import CardsHome from "../components/Home/cardsHome"
 import HeroSection from "../components/Home/HeroSection"
+import ImageMarquee from "../components/Home/ImageMarquee"
 import Maurqee from "../components/Home/Slider/Maurqee/Maurqee"
 import WelcomeMessage from "../components/Home/WelcomeMessage"
 import WorkingHoursMarquee from "../components/Home/WorkingHoursMarquee"
+
 
 const Home = () => {
   return (
@@ -12,6 +14,9 @@ const Home = () => {
         <WelcomeMessage/>
         <Banner/>
         <CardsHome/>
+         <div className="mt-10">
+      <ImageMarquee  />
+    </div>
        <WorkingHoursMarquee
           items={[
             "Daily except Saturday and Wednesday",

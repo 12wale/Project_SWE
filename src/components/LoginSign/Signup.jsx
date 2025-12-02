@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Signup({ switchMode }) {
+export default function Signup({ switchMode, onSuccess }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -26,50 +26,53 @@ export default function Signup({ switchMode }) {
   };
 
   const update = (key, val) => {
-    setForm(prev => ({ ...prev, [key]: val }));
-
-    // Inline validation
+    setForm((prev) => ({ ...prev, [key]: val }));
     switch (key) {
       case "name":
-        setErrors(prev => ({ ...prev, name: val.trim() ? undefined : "Name is required" }));
+        setErrors((prev) => ({ ...prev, name: val.trim() ? undefined : "Name is required" }));
         break;
       case "country":
-        setErrors(prev => ({ ...prev, country: val ? undefined : "Please select your country" }));
+        setErrors((prev) => ({ ...prev, country: val ? undefined : "Select your country" }));
         break;
       case "email":
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
-          email: /\S+@\S+\.\S+/.test(val) ? undefined : "Invalid email"
+          email: /\S+@\S+\.\S+/.test(val) ? undefined : "Invalid email",
         }));
         break;
       case "phone":
-        setErrors(prev => ({ ...prev, phone: val.trim() ? undefined : "Phone is required" }));
+        setErrors((prev) => ({ ...prev, phone: val.trim() ? undefined : "Phone required" }));
         break;
       case "password":
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
-          password: val ? undefined : "Password is required",
-          confirm: form.confirm && form.confirm !== val ? "Passwords do not match" : undefined
+          password: val ? undefined : "Password required",
+          confirm: form.confirm && form.confirm !== val ? "Passwords do not match" : undefined,
         }));
         break;
       case "confirm":
-        setErrors(prev => ({
+        setErrors((prev) => ({
           ...prev,
-          confirm: val === form.password ? undefined : "Passwords do not match"
+          confirm: val === form.password ? undefined : "Passwords do not match",
         }));
         break;
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Final validation
-    const hasErrors = Object.values(errors).some(Boolean) || !form.name || !form.country || !form.email || !form.phone || !form.password || !form.confirm;
+    const hasErrors =
+      Object.values(errors).some(Boolean) ||
+      !form.name ||
+      !form.country ||
+      !form.email ||
+      !form.phone ||
+      !form.password ||
+      !form.confirm;
     if (hasErrors) return;
 
     const code = countryCodes[form.country] || "+";
     const phone = code + form.phone.replace(/\D/g, "");
-
     const userData = {
       name: form.name,
       email: form.email,
@@ -79,7 +82,13 @@ export default function Signup({ switchMode }) {
     };
 
     localStorage.setItem("user", JSON.stringify(userData));
-    navigate("/dashboard");
+
+    // إذا تم تمرير callback من AuthPage
+    if (onSuccess) {
+      onSuccess(); // يعمل refresh للصفحة
+    } else {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -93,22 +102,24 @@ export default function Signup({ switchMode }) {
           type="text"
           placeholder="Full Name"
           value={form.name}
-          onChange={e => update("name", e.target.value)}
+          onChange={(e) => update("name", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
         {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
       </div>
 
-      {/* Country Dropdown */}
+      {/* Country */}
       <div className="flex flex-col">
         <select
           value={form.country}
-          onChange={e => update("country", e.target.value)}
+          onChange={(e) => update("country", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         >
           <option value="">Select Country</option>
-          {Object.keys(countryCodes).map(c => (
-            <option key={c} value={c}>{c} ({countryCodes[c]})</option>
+          {Object.keys(countryCodes).map((c) => (
+            <option key={c} value={c}>
+              {c} ({countryCodes[c]})
+            </option>
           ))}
         </select>
         {errors.country && <p className="text-red-400 text-sm mt-1">{errors.country}</p>}
@@ -120,7 +131,7 @@ export default function Signup({ switchMode }) {
           type="email"
           placeholder="Email"
           value={form.email}
-          onChange={e => update("email", e.target.value)}
+          onChange={(e) => update("email", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
         {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
@@ -132,12 +143,10 @@ export default function Signup({ switchMode }) {
           type="tel"
           placeholder="Phone Number"
           value={form.phone}
-          onChange={e => update("phone", e.target.value)}
+          onChange={(e) => update("phone", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
-        <span className="text-yellow-400 text-sm mt-1">
-          Code: {countryCodes[form.country] || "+"}
-        </span>
+        <span className="text-yellow-400 text-sm mt-1">Code: {countryCodes[form.country] || "+"}</span>
         {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
       </div>
 
@@ -147,7 +156,7 @@ export default function Signup({ switchMode }) {
           type="password"
           placeholder="Password"
           value={form.password}
-          onChange={e => update("password", e.target.value)}
+          onChange={(e) => update("password", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
         {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
@@ -159,13 +168,12 @@ export default function Signup({ switchMode }) {
           type="password"
           placeholder="Confirm Password"
           value={form.confirm}
-          onChange={e => update("confirm", e.target.value)}
+          onChange={(e) => update("confirm", e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
         {errors.confirm && <p className="text-red-400 text-sm mt-1">{errors.confirm}</p>}
       </div>
 
-      {/* Submit Button */}
       <motion.button
         type="submit"
         whileHover={{ scale: 1.05 }}
@@ -176,7 +184,6 @@ export default function Signup({ switchMode }) {
         <span className="relative z-10">Sign Up</span>
       </motion.button>
 
-      {/* Switch to Login */}
       <p className="text-center text-gray-300 mt-3">
         Already have an account?{" "}
         <span
