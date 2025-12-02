@@ -6,12 +6,12 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-import Image7 from "../../../assets/image/photo_2025-11-27_17-40-24.jpg";
-import Image5 from "../../../assets/image/im_1.png";
+import Image7 from "../../../assets/image/n14.jpeg";
+import Image5 from "../../../assets/image/n131.jpg";
 import Image4 from "../../../assets/image/photo_2025-11-27_17-40-55.jpg";
 import Image3 from "../../../assets/image/im_3.png";
 import Image2 from "../../../assets/image/im_2.png";
-import Image1 from "../../../assets/image/im_1.jpg";
+import Image1 from "../../../assets/image/n2.jpg";
 
 import Maurqee from "./Maurqee/Maurqee";
 

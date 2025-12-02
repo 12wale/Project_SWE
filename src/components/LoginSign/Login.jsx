@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ switchMode }) {
+export default function Login({ switchMode, onSuccess }) {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -10,34 +10,34 @@ export default function Login({ switchMode }) {
 
   const updateEmailOrPhone = (val) => {
     setEmailOrPhone(val);
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      emailOrPhone: val.trim() ? undefined : "Please enter your email or phone"
+      emailOrPhone: val.trim() ? undefined : "Enter email or phone",
     }));
   };
 
   const updatePassword = (val) => {
     setPassword(val);
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      password: val ? undefined : "Password cannot be empty"
+      password: val ? undefined : "Password cannot be empty",
     }));
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Final validation
     if (!emailOrPhone.trim() || !password.trim()) {
       setErrors({
-        emailOrPhone: emailOrPhone.trim() ? undefined : "Please enter your email or phone",
-        password: password ? undefined : "Password cannot be empty"
+        emailOrPhone: emailOrPhone.trim()
+          ? undefined
+          : "Enter email or phone",
+        password: password ? undefined : "Password cannot be empty",
       });
       return;
     }
 
     const isEmail = emailOrPhone.includes("@");
-
     const userData = {
       name: "Visitor",
       email: isEmail ? emailOrPhone : "",
@@ -46,37 +46,47 @@ export default function Login({ switchMode }) {
       avatar: "https://i.imgur.com/4ZQZ4WQ.png",
     };
 
+    // حفظ بيانات المستخدم
     localStorage.setItem("user", JSON.stringify(userData));
-    navigate("/dashboard");
+
+    // إذا تم تمرير callback من AuthPage
+    if (onSuccess) {
+      onSuccess(); // يعمل refresh للصفحة
+    } else {
+      navigate("/dashboard");
+    }
   };
 
   return (
-    <motion.form onSubmit={handleLogin} className="flex flex-col gap-4 w-full max-w-md mx-auto px-4 sm:px-0">
-      {/* Email or Phone */}
+    <motion.form
+      onSubmit={handleLogin}
+      className="flex flex-col gap-4 w-full max-w-md mx-auto px-4 sm:px-0"
+    >
       <div className="flex flex-col">
         <input
-          type="email"
-          placeholder="Email "
+          type="text"
+          placeholder="Email or Phone"
           value={emailOrPhone}
-          onChange={e => updateEmailOrPhone(e.target.value)}
+          onChange={(e) => updateEmailOrPhone(e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
-        {errors.emailOrPhone && <p className="text-red-400 text-sm mt-1">{errors.emailOrPhone}</p>}
+        {errors.emailOrPhone && (
+          <p className="text-red-400 text-sm mt-1">{errors.emailOrPhone}</p>
+        )}
       </div>
-
-      {/* Password */}
       <div className="flex flex-col">
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={e => updatePassword(e.target.value)}
+          onChange={(e) => updatePassword(e.target.value)}
           className="bg-white/10 backdrop-blur-md border border-yellow-600 text-yellow-300 placeholder-yellow-400 px-4 py-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-yellow-400 transition-all"
         />
-        {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+        {errors.password && (
+          <p className="text-red-400 text-sm mt-1">{errors.password}</p>
+        )}
       </div>
 
-      {/* Login Button */}
       <motion.button
         type="submit"
         whileHover={{ scale: 1.05 }}
@@ -87,14 +97,13 @@ export default function Login({ switchMode }) {
         <span className="relative z-10">Login</span>
       </motion.button>
 
-      {/* Switch to Signup */}
       <p className="text-center text-gray-300 mt-3">
         New here?{" "}
         <span
           onClick={() => switchMode("signup")}
           className="text-yellow-400 cursor-pointer hover:underline select-none"
         >
-          Create an account
+          Create account
         </span>
       </p>
     </motion.form>
