@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { getCartCount } = useCart();
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -80,6 +81,18 @@ const Header = () => {
           ) : (
             <Link to="/auth" className="cinzel-decorative text-[16px] px-5 py-2 font-semibold text-yellow-300 bg-white/5 backdrop-blur-lg border border-yellow-500/40 rounded-2xl shadow-[0_0_15px_rgba(255,215,0,0.3)] transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_20px_rgba(255,215,0,0.7)] hover:-translate-y-0.5 active:scale-95">Login / Sign Up</Link>
           )}
+          {/* Cart Icon */}
+          <Link 
+            to="/cart" 
+            className="relative text-gray-300 hover:text-yellow-500 transition-colors duration-300"
+          >
+            <ShoppingBag className="w-6 h-6" />
+            {getCartCount() > 0 && (
+              <span className="absolute -top-2 -right-2 bg-yellow-500 text-gray-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {getCartCount()}
+              </span>
+            )}
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}

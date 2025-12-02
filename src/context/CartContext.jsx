@@ -10,6 +10,7 @@ export const useCart = () => {
   return context;
 };
 
+export default CartContext;
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     // Load cart from localStorage on initialization

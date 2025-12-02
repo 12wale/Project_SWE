@@ -6,18 +6,13 @@ import "aos/dist/aos.css";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 import ScrollToTop from "./layouts/ScrollToTop";
-
+import Cart from "./Pages/Cart";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Contact from './Pages/Contact'
 import Souvenirs from './Pages/Souvenirs'
-import { useEffect } from 'react'
-import ScrollToTop from './layouts/ScrollToTop'
-import AOS from 'aos'
 import 'aos/dist/aos.css'
-import Contact from "./Pages/Contact";
-import Souvenirs from "./Pages/Souvenirs";
-
+import { CartProvider } from "./context/CartContext";
 import AuthPage from "./components/LoginSign/AuthPage";
 import Dashboard from "./components/LoginSign/Dashboard";
 import ProtectedRoute from "./components/LoginSign/ProtectedRoute";
@@ -34,6 +29,7 @@ export default function App() {
 
   return (
     <CartProvider>
+
       <BrowserRouter>
         <ScrollToTop />
         <Header />
@@ -44,7 +40,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/souvenirs" element={<Souvenirs />} />
-
+        <Route path="/cart" element={<Cart />} />
      
         <Route 
     path="/tickets" 
@@ -77,5 +73,7 @@ export default function App() {
 
       <Footer />
     </BrowserRouter>
+
+    </CartProvider>
   );
 }
