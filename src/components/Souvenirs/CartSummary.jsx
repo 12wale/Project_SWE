@@ -1,25 +1,53 @@
-import { ShoppingBag, X, Plus, Minus } from 'lucide-react';
+import { ShoppingBag, X, Plus, Minus, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 
 const CartSummary = () => {
   const { cart, removeFromCart, updateQuantity, getCartTotal, getCartCount } = useCart();
+  const [isOpen, setIsOpen] = useState(false);
 
   if (getCartCount() === 0) {
     return null;
   }
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 max-w-md w-full mx-4 md:mx-0">
-      <div className="bg-gray-800 border-2 border-yellow-500/50 rounded-lg shadow-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-gray-900">
+    <>
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden fixed bottom-4 right-4 z-50 bg-gradient-to-r from-yellow-600 to-yellow-500 text-gray-900 p-3 rounded-full shadow-lg hover:scale-110 transition-transform"
+        >
+          <div className="relative">
             <ShoppingBag className="w-6 h-6" />
-            <h3 className="font-bold text-lg">Shopping Cart ({getCartCount()})</h3>
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-gray-800">
+              {getCartCount()}
+            </span>
           </div>
-        </div>
+        </button>
+      )}
 
-        <div className="max-h-96 overflow-y-auto p-4 space-y-4">
+      <div className={`
+        fixed left-4 right-4 md:left-auto md:w-full md:max-w-md z-50 
+        transition-all duration-300 ease-in-out
+        ${isOpen ? 'bottom-4 translate-y-0' : 'bottom-4 translate-y-[120%] opacity-0 pointer-events-none'}
+        md:bottom-8 md:right-8 md:translate-y-0 md:opacity-100 md:pointer-events-auto
+      `}>
+        <div className="bg-gray-800 border-2 border-yellow-500/50 rounded-lg shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 p-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-gray-900">
+              <ShoppingBag className="w-6 h-6" />
+              <h3 className="font-bold text-lg">Shopping Cart ({getCartCount()})</h3>
+            </div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="md:hidden p-1 hover:bg-yellow-600/20 rounded transition-colors"
+            >
+              <ChevronDown className="w-6 h-6 text-gray-900" />
+            </button>
+          </div>
+
+        <div className="max-h-[50vh] md:max-h-96 overflow-y-auto p-4 space-y-4">
           {cart.map((item) => (
             <div 
               key={item.id} 
@@ -28,7 +56,7 @@ const CartSummary = () => {
               <img 
                 src={item.image} 
                 alt={item.name} 
-                className="w-16 h-16 object-cover rounded"
+                className="w-12 h-12 md:w-16 md:h-16 object-cover rounded"
               />
               
               <div className="flex-1 min-w-0">
@@ -83,6 +111,7 @@ const CartSummary = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
