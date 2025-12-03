@@ -24,13 +24,14 @@ export default function HeroTitle() {
 
         <div id="parallax-text" className="relative transition-transform duration-200 ease-out">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-wide 
-                         bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 
+                         bg-gradient-to-r from-yellow-200 via-yellow-500 to-yellow-900 
                          bg-clip-text text-transparent animate-gold-shine animate-glow 
+                         
                         ">
             Discover the Secrets of Ancient Egypt!
           </h1>
 
-          <div className="mx-auto mt-3 sm:mt-4 w-24 sm:w-32 h-1 rounded-full bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-300 animate-pulse "></div>
+          <div className="mx-auto mt-3 sm:mt-4 w-24 sm:w-32 h-1 rounded-full bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-700 animate-pulse "></div>
 
           <p className="mt-2 sm:mt-4 text-xs sm:text-sm md:text-base lg:text-lg text-yellow-200 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto ">
             Embark on a magical journey among pyramids and golden treasures at our amazing museum.

@@ -68,17 +68,17 @@ export default function Banner() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen px-4 sm:px-6 lg:px-8">
+    <div className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen  px-4 sm:px-6 lg:px-8">
       {/* Canvas للـParticles */}
       <canvas
         id="particles-canvas"
         className="absolute inset-0 z-0 pointer-events-none"
       ></canvas>
 
-      <div className="flex flex-col justify-center z-20 items-center w-full max-w-6xl space-y-12">
+      <div className="flex flex-col justify-center z-20 items-center w-full max-w-6xl space-y-20 lg:space-y-20 py-12 ">
         {/* Section 1 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-25 items-center w-full">
-          <div className="relative group flex justify-center items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 mt-[15%] lg:mt-[4%] sm:gap-25 items-center py-10 px-12 lg:px-0 w-full ">
+          <div className="relative group flex justify-center    items-center">
             <div
               data-aos="fade-right"
               data-aos-duration="500"
@@ -97,26 +97,28 @@ export default function Banner() {
             data-aos-duration="800"
             className="flex flex-col gap-4 sm:gap-6 justify-center text-center sm:text-left px-2 sm:px-0"
           >
-            <h1 className="cinzel-decorative text-3xl sm:text-4xl lg:text-5xl font-extrabold   glow-text">
+            <h1 className="cinzel-decorative text-2xl sm:text-4xl lg:text-5xl font-extrabold   glow-text">
               A Journey to the Heart of Civilization
             </h1>
-            <p className="text-yellow-500 leading-6 sm:leading-7 ">
+            <p className=" bg-gradient-to-r from-amber-100 via-yellow-300 to-orange-400
+                     bg-clip-text text-transparent leading-6 sm:leading-9 ">
               An amazing journey begins here—where one of Egypt’s greatest kings stands to tell a story of thousands of years amidst an atmosphere that combines modernity and antiquity.
             </p>
           </div>
         </div>
 
         {/* Section 2 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-25 items-center w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 mt-[15%] lg:mt-[4%] sm:gap-25 lg:pb-20 items-center px-12 lg:px-0 w-full ">
           <div
             data-aos="fade-right"
             data-aos-duration="800"
             className="flex flex-col gap-4 sm:gap-6 justify-center text-center sm:text-left order-2 sm:order-1 px-2 sm:px-0"
           >
-            <h1 className="cinzel-decorative text-3xl sm:text-4xl lg:text-5xl font-extrabold   glow-text">
+            <h1 className="cinzel-decorative text-2xl sm:text-4xl lg:text-5xl font-extrabold   glow-text">
               Secrets of the Ancient Temple
             </h1>
-            <p className="text-yellow-500 leading-6 sm:leading-7 ">
+            <p className=" bg-gradient-to-r from-amber-100 via-yellow-300 to-orange-400
+                     bg-clip-text text-transparent leading-6 sm:leading-9 ">
               Enjoy an unforgettable moment in front of one of the greatest kings of ancient Egypt.
             </p>
           </div>

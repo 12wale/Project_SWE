@@ -61,10 +61,10 @@ export default function CardsHome() {
   };
 
   return (
-    <div className="  relative min-h-screen flex flex-col justify-center items-center py-20 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
+    <div className="  relative min-h-screen  flex flex-col mt-[-60px] md:mt-[5px] justify-center items-center py-20 overflow-hidden bg-gradient-to-b from-gray-900 to-black">
       <HeroTitle />
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-22 mt-[16%] z-10 max-w-[80%] w-full px-4">
+      <div className="grid grid-cols-1  sm:grid-cols-3 gap-22 mt-[70%] md:mt-[20%] lg-mt[15%] z-10 max-w-[80%] w-full px-4">
         {cards.map((card, index) => (
           <div key={card.id} className="relative group cursor-pointer perspective-1000">
 

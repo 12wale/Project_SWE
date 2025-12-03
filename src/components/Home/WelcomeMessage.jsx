@@ -9,7 +9,7 @@ const WelcomeMessage = () => {
         data-aos-duration="800"
       >
         <h1
-          className="cinzel-decorative text-6xl sm:text-7xl lg:text-7xl font-extrabold tracking-wider
+          className="cinzel-decorative text-3xl sm:text-5xl  lg:text-7xl font-extrabold tracking-wider
                      bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-500
                      bg-clip-text text-transparent
                     "
@@ -18,7 +18,7 @@ const WelcomeMessage = () => {
         </h1>
 
         <p
-          className="mt-4 text-lg sm:text-xl lg:text-2xl tracking-wide
+          className="mt-4 text-[15px] sm:text-xl lg:text-2xl tracking-wide
                      bg-gradient-to-r from-white via-white to-orange-300
                      bg-clip-text text-transparent
                     "

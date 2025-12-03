@@ -45,7 +45,7 @@ const Heroslider = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-900 via-black to-gray-950 px-4 sm:px-0">
+    <div className="relative w-full min-h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-b bg-gray-900 px-4 sm:px-0">
 
       {/* Glassmorphism marquee */}
       <div className="absolute top-4 left-1/2 w-full max-w-5xl -translate-x-1/2 flex justify-center z-20 text-center
@@ -79,12 +79,12 @@ const Heroslider = () => {
           loop={true}
           speed={1500}
           modules={[EffectCoverflow, Pagination, Autoplay]}
-          className="w-full max-w-full !pb-0"
+          className="w-full max-w-full pb-0 mt-[20%] md:mt-[10%] lg:mt-0"
         >
           {ImageList.map((data) => (
             <SwiperSlide
               key={data.id}
-              className="w-[280px] sm:w-[360px] lg:w-[700px] flex justify-center !h-auto !p-0"
+              className="w-[280px] sm:w-[360px] lg:w-[700px] flex justify-center  h-auto p-0"
             >
               <ParallaxCard img={data.img} subtitle={data.subtitle} />
             </SwiperSlide>
@@ -135,7 +135,7 @@ const ParallaxCard = ({ img, subtitle }) => {
 
   return (
     <div
-      className="relative group perspective-1000"
+      className="relative group perspective-1000 rounded-2xl"
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
